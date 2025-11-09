@@ -1,5 +1,5 @@
 // client/src/components/PostCard.js
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import {

@@ -1,5 +1,5 @@
 // client/src/context/AuthContext.js
-import React, { createContext, useReducer, useEffect } from 'react';
+import { createContext, useReducer } from 'react';
 import axios from 'axios';
 
 // 1. Define the Initial State

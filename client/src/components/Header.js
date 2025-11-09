@@ -1,5 +1,5 @@
 // client/src/components/Header.js
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import {
