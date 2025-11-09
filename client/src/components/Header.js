@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 
 const Header = () => {
-  const { user, logout }s = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onLogout = () => {

@@ -1,21 +1,83 @@
 // client/src/pages/HomePage.js
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { Box, Typography, Button } from '@mui/material';
+import axios from 'axios';
+import {
+  Box,
+  Typography,
+  Button,
+  CircularProgress,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
-import CreatePost from '../components/CreatePost'; // Import CreatePost
+import CreatePost from '../components/CreatePost';
+import PostCard from '../components/PostCard'; // Import PostCard
 
 const HomePage = () => {
   const { user } = useContext(AuthContext);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const handleNewPost = (post) => {
-    // This function will add the new post to our feed's state
-    // We will implement this fully in the next step.
-    console.log('New post created:', post);
+  // --- Fetch All Posts ---
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        // This is a public route, no token needed
+        const { data } = await axios.get('http://localhost:5001/api/posts');
+        setPosts(data);
+        setError('');
+      } catch (err) {
+        setError(err.response?.data?.message || 'Could not fetch posts');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []); // Empty dependency array means this runs once on load
+
+  // --- Handler for new post creation ---
+  const handleNewPost = (newPost) => {
+    // Add the new post to the top of the feed
+    setPosts([newPost, ...posts]);
   };
 
+  // --- Render Function ---
+  const renderFeed = () => {
+    if (loading) {
+      return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+
+    if (error) {
+      return (
+        <Typography color="error" align="center" sx={{ mt: 5 }}>
+          {error}
+        </Typography>
+      );
+    }
+
+    if (posts.length === 0) {
+      return (
+        <Typography color="text.secondary" align="center" sx={{ mt: 5 }}>
+          No posts yet. Be the first!
+        </Typography>
+      );
+    }
+
+    return posts.map((post) => (
+      <PostCard key={post._id} post={post} />
+    ));
+  };
+
+  // --- Main Component Return ---
   if (!user) {
-    // If user is not logged in, show welcome/login message
+    // If user is not logged in
     return (
       <Box sx={{ textAlign: 'center', mt: 10 }}>
         <Typography variant="h4">Welcome to the Social App</Typography>
@@ -39,18 +101,14 @@ const HomePage = () => {
     );
   }
 
-  // If user is logged in, show the CreatePost component
-  // and (soon) the post feed.
+  // If user is logged in
   return (
     <Box>
+      {/* 1. Create Post Form */}
       <CreatePost onNewPost={handleNewPost} />
       
-      {/* We will add the PostFeed component here in the next step */}
-      <Box sx={{ textAlign: 'center', mt: 5 }}>
-        <Typography variant="h6" color="text.secondary">
-          Your post feed will appear here.
-        </Typography>
-      </Box>
+      {/* 2. Post Feed */}
+      {renderFeed()}
     </Box>
   );
 };

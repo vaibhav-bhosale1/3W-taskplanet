@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container, CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePages';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Header from './components/Header'; // Import the real Header

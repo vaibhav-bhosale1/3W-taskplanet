@@ -70,7 +70,7 @@ const CreatePost = ({ onNewPost }) => {
       <Box component="form" onSubmit={handleSubmit}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <Avatar sx={{ mr: 1.5, bgcolor: 'primary.main' }}>
-            {user.username.charAt(0).toUpperCase()}
+            {user.username?.charAt(0).toUpperCase()}
           </Avatar>
           <TextField
             fullWidth
