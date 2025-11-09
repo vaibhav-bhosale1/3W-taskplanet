@@ -12,18 +12,25 @@ connectDB();
 
 const app = express();
 
-// Enable CORS (Cross-Origin Resource Sharing)
+// Enable CORS
 app.use(cors());
 
 // Body Parser Middleware
-app.use(express.json()); // To accept JSON data in the body
-app.use(express.urlencoded({ extended: false })); // To accept form data
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Simple test route
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+// Mount routes
 app.use('/api/users', require('./routes/userRoutes'));
+
+// --- ADD THIS LINE ---
+app.use('/api/posts', require('./routes/postRoutes'));
+// -----------------------
+
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
