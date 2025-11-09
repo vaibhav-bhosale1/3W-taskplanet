@@ -57,7 +57,7 @@ const PostCard = ({ post }) => {
       const config = getAuthConfig();
       // API returns the new array of likes
       const { data } = await axios.put(
-        `http://localhost:5001/api/posts/${post._id}/like`,
+        `https://threew-taskplanet.onrender.com/api/posts/${post._id}/like`,
         {}, // Empty body
         config
       );
@@ -76,7 +76,7 @@ const PostCard = ({ post }) => {
       const config = getAuthConfig();
       // API returns the new array of comments
       const { data } = await axios.post(
-        `http://localhost:5001/api/posts/${post._id}/comment`,
+        `https://threew-taskplanet.onrender.com/api/posts/${post._id}/comment`,
         { text: commentText },
         config
       );

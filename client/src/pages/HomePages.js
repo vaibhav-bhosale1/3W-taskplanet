@@ -24,7 +24,7 @@ const HomePage = () => {
       try {
         setLoading(true);
         // This is a public route, no token needed
-        const { data } = await axios.get('http://localhost:5001/api/posts');
+        const { data } = await axios.get('https://threew-taskplanet.onrender.com/api/posts');
         setPosts(data);
         setError('');
       } catch (err) {
